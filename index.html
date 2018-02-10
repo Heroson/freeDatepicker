@@ -1,21 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>日期选择器</title>
-  <!-- <link rel="stylesheet" href="style/reset.css"> -->
-  <link rel="stylesheet" href="style/datepicker.css">
+    <meta charset="UTF-8">
+    <title>日期选择器</title>
+    <!-- <link rel="stylesheet" href="style/reset.css"> -->
+    <link rel="stylesheet" href="style/datepicker.css">
 </head>
+
 <body>
-  <div id="container">
-    <input type="text" id="testInput">
-  </div>
-  <script src="datepicker.js"></script>
-  <script>
-    window.onload = function(){
-      var elem = document.getElementById('testInput');
-      Datepicker(elem);
+    <div id="container">
+        <form action="demo_form.php" method="post/get">
+            <input type="text" name="email" size="40" maxlength="50">
+            <input type="text" id="testInput">
+            <input type="password">
+            <input type="checkbox" checked="checked">
+            <input type="radio" checked="checked">
+            <input type="submit" value="Send">
+            <textarea name="comment" rows="10" cols="20"></textarea>
+            <input type="hidden">
+            <input type="reset">
+            <select>
+                <option>苹果</option>
+                <option selected="selected">香蕉</option>
+                <option>樱桃</option>
+            </select>
+
+        </form>
+    </div>
+    <script src="datepicker.js"></script>
+    <script>
+    window.onload = function() {
+        var elem = document.getElementById('testInput');
+        Datepicker(elem);
     }
-  </script>
+    </script>
 </body>
+
 </html>

@@ -43,6 +43,16 @@ var Datepicker = (function(doc) {
    */
   var template = '<div class="m-datepicker"><div class="g-hd"><div class="g-l"><button>&lt;</button></div><div class="g-r"><button>&gt;</button></div><div class="g-m"><h1 class="u-title"></h1></div></div><div class="g-bd"><table><thead><tr><td>日</td><td>一</td><td>二</td><td>三</td><td>四</td><td>五</td><td>六</td></tr></thead><tbody></tbody></table></div></div>'
 
+  /**
+   * [html2Node 将HTML代码转化为DOM]
+   * @Author   zzj
+   * @DateTime 2018-02-10
+   * @version  [0.1]
+   * @param    {[string]}   htmlStr   [HTML字符串]
+   * @return   {[element]}           [要生成的DOM对象]
+   *
+   * TODO 目前使用firstChild，也就是说字符串必须从element节点开始，若在最前面的是文本节点则会报错，由于是在组件内部所以不需要考虑这种情况
+   */
   function html2Node(htmlStr){
     var temp = doc.createElement('div');
     temp.innerHTML = htmlStr;
@@ -55,8 +65,8 @@ var Datepicker = (function(doc) {
     return ( (' ' + curClass + ' ').indexOf(' ' + clazz + ' ') !== -1 );  // 前后加空格是为了避免class="helloworld"匹配到了"hello",也认为样式已存在
   }
 
-  function addClass(elem, clazz){
-    if(!hasClass(elem, clazz)){   // 本来没有该样式才添加
+  function addClass(elem, clazz, noThisClass){
+    if(noThisClass || !hasClass(elem, clazz)){   // 本来没有该样式才添加
       var curClass = elem.className.trim();
       elem.className = curClass ? (curClass + ' ' + clazz) : clazz;
     }else{
@@ -64,8 +74,8 @@ var Datepicker = (function(doc) {
     }
   }
 
-  function delClass(elem, clazz){
-    if(hasClass(elem, clazz)){
+  function delClass(elem, clazz, hasThisClass){
+    if(hasThisClass || isHasChasClass(elem, clazz)){
       elem.className = (' ' + elem.className + ' ').replace(' ' + clazz + ' ',' ').trim();
     }else{
       return false;
@@ -73,7 +83,7 @@ var Datepicker = (function(doc) {
   }
 
   function toggleClass(elem, clazz){
-    return hasClass(elem, clazz) ? delClass(elem, clazz) : addClass(elem, clazz);
+    return hasClass(elem, clazz) ? delClass(elem, clazz, true) : addClass(elem, clazz, true);
   }
 
   /**
