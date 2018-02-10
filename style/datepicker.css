@@ -1,7 +1,7 @@
 .m-datepicker{
   position:absolute;display: none;
   width:280px;padding:10px;
-  text-align: center;background-color: #fff;box-shadow: 0 0 2px 2px #999;
+  text-align: center;background-color: #fff;box-shadow: 0 0 2px 2px #999;border-radius:4px;
 }
 .m-datepicker.z-show{
   display: block;
@@ -12,6 +12,9 @@
    font-size: 14px;font-weight: normal;
 }
 
+/*.m-datepicker .g-hd{
+  overflow: hidden;
+}
 .m-datepicker .g-hd .g-l{
   float:left;
 }
@@ -20,12 +23,19 @@
 }
 .m-datepicker .g-hd .g-m{
   overflow:hidden;
+}*/
+
+.m-datepicker .g-hd{
+  display: table;width: 100%;
+}
+.m-datepicker .g-hd>*{
+  display: table-cell;vertical-align: middle;
 }
 
 .m-datepicker .g-bd table{
   table-layout: fixed;
   width:260px;
-  text-align: right;
+  text-align: right;font-size:14px;
 }
 .m-datepicker .g-bd table .s-gray{
   color:#999;

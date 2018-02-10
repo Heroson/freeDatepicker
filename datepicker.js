@@ -41,7 +41,8 @@ var Datepicker = (function(doc) {
       </div>
     </div>
    */
-  var template = '<div class="m-datepicker"><div class="g-hd"><div class="g-l"><button>&lt;</button></div><div class="g-r"><button>&gt;</button></div><div class="g-m"><h1 class="u-title"></h1></div></div><div class="g-bd"><table><thead><tr><td>日</td><td>一</td><td>二</td><td>三</td><td>四</td><td>五</td><td>六</td></tr></thead><tbody></tbody></table></div></div>'
+  // var template = '<div class="m-datepicker"><div class="g-hd"><div class="g-l"><button>&lt;</button></div><div class="g-r"><button>&gt;</button></div><div class="g-m"><h1 class="u-title"></h1></div></div><div class="g-bd"><table><thead><tr><td>日</td><td>一</td><td>二</td><td>三</td><td>四</td><td>五</td><td>六</td></tr></thead><tbody></tbody></table></div></div>'
+  var template = '<div class="m-datepicker"><div class="g-hd"><div class="g-l"><button>&lt;</button></div><div class="g-m"><h1 class="u-title"></h1></div><div class="g-r"><button>&gt;</button></div></div><div class="g-bd"><table><thead><tr><td>日</td><td>一</td><td>二</td><td>三</td><td>四</td><td>五</td><td>六</td></tr></thead><tbody></tbody></table></div></div>'
 
   /** 工具函数：DOM
    *
@@ -344,6 +345,14 @@ var Datepicker = (function(doc) {
   function paddingLeft0(num){
     return ('0'+num).slice(-2);
   }
+
+  /**
+   * [selectDate 选择日期]
+   * @Author   zzj
+   * @DateTime 2018-02-10
+   * @version  [0.1]
+   * @param    {Event}   e [点击事件对象]
+   */
   function selectDate(e){
     var elem = e.target;
     if(elem.tagName === 'TD'){
@@ -374,6 +383,38 @@ var Datepicker = (function(doc) {
     bindEvent(toggleElem);
   }
 
+  function calcPosition(){
+    var viewportWidth = doc.documentElement.clientWidth,
+      viewportHeight = doc.documentElement.clientHeight,
+      tRect = toggleElem.getBoundingClientRect(),
+      pWidth = pickerElem.clientWidth,
+      pHeight = pickerElem.clientHeight,
+      calcResult, initPosition, pLeft, pTop, pRight, pBottom;
+
+
+      pLeft= tRect.left - pWidth/2 + tRect.width/2,
+      pTop= tRect.top + tRect.height + 10,
+      pRight= pLeft + pWidth,
+      pBottom= pTop + pHeight
+
+    if(pRight > viewportWidth){
+      pLeft = viewportWidth - pWidth - 10; // 右边缘溢出，则设置为距离有边缘10px
+    }
+
+    if(pLeft < 0){                // 左边缘溢出，则设置为距离左边缘10px
+      pLeft = 10;
+    }
+
+    if(pBottom > viewportHeight){
+      pTop -= (tRect.height + pHeight + 20);  // 下边缘溢出，则设置为距离触发对象10px
+    }
+
+    return {
+      left: pLeft,
+      top: pTop
+    };
+  }
+
   /**
    * [setPosition 设置控件的出现位置]
    * @Author   zzj
@@ -381,11 +422,9 @@ var Datepicker = (function(doc) {
    * @version  [0.1]
    */
   function setPosition(){
-    var tRect = toggleElem.getBoundingClientRect(),
-      pWidth = pickerElem.clientWidth,
-      tWidth = tRect.width;
-    pickerElem.style.left = tRect.left - pWidth/2 + tWidth/2 + 'px';
-    pickerElem.style.top = tRect.top + tRect.height + 10 + 'px';
+    var calcResult = calcPosition();
+    pickerElem.style.left = calcResult.left + 'px';
+    pickerElem.style.top = calcResult.top + 'px';
   }
 
   /**
@@ -430,8 +469,8 @@ var Datepicker = (function(doc) {
 
     var headerDom = pickerElem.children[0];
     btnPrevElem = headerDom.children[0];
-    btnNextElem = headerDom.children[1];
-    titleElem = headerDom.children[2].firstChild;
+    btnNextElem = headerDom.children[2];
+    titleElem = headerDom.children[1].firstChild;
     tbodyElem = pickerElem.getElementsByTagName('tbody')[0];
 
     doc.body.appendChild(pickerElem);
