@@ -12,9 +12,6 @@
    font-size: 14px;font-weight: normal;
 }
 
-/*.m-datepicker .g-hd{
-  padding:10px;
-}*/
 .m-datepicker .g-hd .g-l{
   float:left;
 }
@@ -26,9 +23,19 @@
 }
 
 .m-datepicker .g-bd table{
-  width:100%;
+  table-layout: fixed;
+  width:260px;
+  text-align: right;
 }
-
 .m-datepicker .g-bd table .s-gray{
   color:#999;
+}
+.m-datepicker .g-bd thead td{
+  width:24px;
+}
+.m-datepicker .g-bd tbody td{
+  cursor: pointer;
+}
+.m-datepicker .g-bd tbody td:hover{
+  background-color: #ddd;
 }

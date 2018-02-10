@@ -109,7 +109,7 @@ var Datepicker = (function(doc) {
    * @return   {Boolean}                [操作是否完成]
    */
   function delClass(elem, clazz, hasThisClass){
-    if(hasThisClass || isHasChasClass(elem, clazz)){
+    if(hasThisClass || hasClass(elem, clazz)){
       elem.className = (' ' + elem.className + ' ').replace(' ' + clazz + ' ',' ').trim();
       return true;
     }else{
@@ -318,6 +318,45 @@ var Datepicker = (function(doc) {
     turnTo(1);
   }
 
+  /**
+   * [bodyClickHandler 全局反事件]
+   * @Author   zzj
+   * @DateTime 2018-02-10
+   * @version  [0.1]
+   * @param    {[type]}   e [点击事件对象]
+   */
+  function bodyClickHandler(e){
+    if(!pickerElem || !toggleElem) return;
+    var target = e.target;
+    if(!pickerElem.contains(target) && !toggleElem.contains(target)){ // 如果点击非相关元素，则关闭
+      delClass(pickerElem, 'z-show');
+    }
+  }
+
+  /**
+   * [paddingLeft0 为个位数日期数字补零]
+   * @Author   zzj
+   * @DateTime 2018-02-10
+   * @version  [0.1]
+   * @param    {Number}   num [日期数字]
+   * @return   {String}       [补零后的结果]
+   */
+  function paddingLeft0(num){
+    return ('0'+num).slice(-2);
+  }
+  function selectDate(e){
+    var elem = e.target;
+    if(elem.tagName === 'TD'){
+      var date = elem.innerHTML,
+        month = curFirstDate.getMonth() + 1,
+        year = curFirstDate.getFullYear();
+
+      toggleElem.value = year + '-' + paddingLeft0(month) + '-' + paddingLeft0(date);
+
+      delClass(pickerElem, 'z-show');   // 设值以后要隐藏日期选择器
+    }
+  }
+
   /** 实例化
    *
    */
@@ -408,7 +447,8 @@ var Datepicker = (function(doc) {
   function initEvent(){
     btnPrevElem.addEventListener('click', prev, false);
     btnNextElem.addEventListener('click', next, false);
-    doc.addEventListener('click', bodyHide, false);
+    tbodyElem.addEventListener('click', selectDate, false);     // 利用事件委托，提高效率
+    doc.addEventListener('click', bodyClickHandler, false);
   }
 
   initDom();    // 加载脚本时，同时初始化
