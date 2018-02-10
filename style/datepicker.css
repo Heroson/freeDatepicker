@@ -1,0 +1,31 @@
+.m-datepicker{
+  display: none;
+  width:280px;
+  text-align: center;
+}
+.m-datepicker.z-show{
+  display: block;
+}
+
+.m-datepicker h1{
+   margin-top: 0;margin-bottom: 0;
+   font-size: 14px;font-weight: normal;
+}
+
+.m-datepicker .g-hd .g-l{
+  float:left;
+}
+.m-datepicker .g-hd .g-r{
+  float:right;
+}
+.m-datepicker .g-hd .g-m{
+  overflow:hidden;
+}
+
+.m-datepicker .g-bd table{
+  width:100%;
+}
+
+.m-datepicker .g-bd table .s-gray{
+  color:#999;
+}

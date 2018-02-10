@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>日期选择器</title>
+  <!-- <link rel="stylesheet" href="style/reset.css"> -->
+  <link rel="stylesheet" href="style/datepicker.css">
+</head>
+<body>
+  <div id="container">
+    <input type="text" id="testInput">
+  </div>
+  <script src="datepicker.js"></script>
+  <script>
+    window.onload = function(){
+      var elem = document.getElementById('testInput');
+      Datepicker(elem);
+    }
+  </script>
+</body>
+</html>
