@@ -213,21 +213,24 @@ var Datepicker = (function(doc) {
    * @version  [0.1]
    * @param    {Date}   date [可选，初始化日期]
    * @return   {Object}      [包含要渲染当前月份日期的所有信息的对象容器]
+   *
+   * 如果有传入日期，则使用该日期生成，否则使用缓存的当前月份第一天，默认渲染当前月份
    */
   function createDateArr(date) {
-    var curYear, curMonth;
-    if (curFirstDate) {
-      curYear = curFirstDate.getFullYear();
-      curMonth = curFirstDate.getMonth();
-    } else {
-      date || (date = new Date());
-      curYear = date.getFullYear(),
-        curMonth = date.getMonth();
-      curFirstDate = getFirstDateOfMonth(curYear, curMonth);
+    var date, curYear, curMonth, curPaddingBefore, curPaddingAfter, curMonthDates;
+
+    if(!date){
+       date = curFirstDate || (new Date());
     }
-    var curPaddingBefore = getPaddingBefore(curYear, curMonth);
-    var curMonthDates = getDatesOfMonth(curYear, curMonth);
-    var curPaddingAfter = getPaddingAfter(curPaddingBefore.length + curMonthDates.length);
+
+    curYear = date.getFullYear(),
+    curMonth = date.getMonth();
+
+    curFirstDate = getFirstDateOfMonth(curYear, curMonth);  // 重置当前日期，由于下面的函数调用依赖curFirstDate，所以要放这里
+
+    curPaddingBefore = getPaddingBefore(curYear, curMonth);
+    curMonthDates = getDatesOfMonth(curYear, curMonth);
+    curPaddingAfter = getPaddingAfter(curPaddingBefore.length + curMonthDates.length);
 
     return {
       lenBefore: curPaddingBefore.length,
@@ -332,6 +335,14 @@ var Datepicker = (function(doc) {
     bindEvent(toggleElem);
   }
 
+  function setPosition(){
+    var tRect = toggleElem.getBoundingClientRect(),
+      pWidth = pickerElem.clientWidth,
+      tWidth = tRect.width;
+    pickerElem.style.left = tRect.left - pWidth/2 + tWidth/2 + 'px';
+    pickerElem.style.top = tRect.top + tRect.height + 10 + 'px';
+  }
+
   /**
    * [toggle 显示/隐藏日期选择器]
    * @Author   zzj
@@ -342,7 +353,8 @@ var Datepicker = (function(doc) {
   function toggle(){
     render(createDateArr());
     setTitle(curFirstDate);
-    toggleClass(pickerElem, 'z-show');
+    toggleClass(pickerElem, 'z-show');  // 需要先出现，才能动态计算宽高
+    setPosition();
   }
 
   /**

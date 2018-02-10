@@ -1,7 +1,7 @@
 .m-datepicker{
-  display: none;
-  width:280px;
-  text-align: center;
+  position:absolute;display: none;
+  width:280px;padding:10px;
+  text-align: center;background-color: #fff;box-shadow: 0 0 2px 2px #999;
 }
 .m-datepicker.z-show{
   display: block;
@@ -12,6 +12,9 @@
    font-size: 14px;font-weight: normal;
 }
 
+/*.m-datepicker .g-hd{
+  padding:10px;
+}*/
 .m-datepicker .g-hd .g-l{
   float:left;
 }
