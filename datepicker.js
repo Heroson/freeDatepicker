@@ -335,6 +335,12 @@ var Datepicker = (function(doc) {
     bindEvent(toggleElem);
   }
 
+  /**
+   * [setPosition 设置控件的出现位置]
+   * @Author   zzj
+   * @DateTime 2018-02-10
+   * @version  [0.1]
+   */
   function setPosition(){
     var tRect = toggleElem.getBoundingClientRect(),
       pWidth = pickerElem.clientWidth,
@@ -353,7 +359,7 @@ var Datepicker = (function(doc) {
   function toggle(){
     render(createDateArr());
     setTitle(curFirstDate);
-    toggleClass(pickerElem, 'z-show');  // 需要先出现，才能动态计算宽高
+    toggleClass(pickerElem, 'z-show');  // 需要先出现，才能动态计算宽高，否则为0
     setPosition();
   }
 
@@ -402,6 +408,7 @@ var Datepicker = (function(doc) {
   function initEvent(){
     btnPrevElem.addEventListener('click', prev, false);
     btnNextElem.addEventListener('click', next, false);
+    doc.addEventListener('click', bodyHide, false);
   }
 
   initDom();    // 加载脚本时，同时初始化
