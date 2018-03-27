@@ -10,7 +10,7 @@
 
 <body>
     <div id="container">
-        <form action="demo_form.php" method="post/get">
+        <form id="testForm" action="demo_form.php" method="post/get" tabindex="-1">
             <textarea name="comment" rows="40" cols="20"></textarea>
             <input type="text" name="email" size="40" maxlength="50">
             <input type="password">
@@ -39,6 +39,10 @@
         var elem = document.getElementById('testInput');
         Datepicker(elem);
     }
+    // document.getElementById('testForm').addEventListener('keydown', function(e){
+    //     console.log(e);
+    //     console.log(e.target);
+    // }, false);
     </script>
 </body>
 

@@ -1,5 +1,5 @@
 .m-datepicker{
-  position:absolute;display: none;
+  position:fixed;display: none;
   width:280px;padding:10px;
   text-align: center;background-color: #fff;box-shadow: 0 0 2px 2px #999;border-radius:4px;
 }
