@@ -1,6 +1,6 @@
 'use strict';
 
-var Datepicker = (function(doc) {
+var Datepicker = (function(doc, win, undefined) {
 
   var DATE_COUNTS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // 记录每月常规天数
   var DATES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]; // 一月最大天数，用来作为截取所需日期的原型
@@ -9,7 +9,7 @@ var Datepicker = (function(doc) {
   var curFirstDate = null; // 记录当前月份的第一天，方便访问和计算
   var pickerElem, titleElem, btnPrevElem, btnNextElem, tbodyElem;
   var toggleElem;
-
+  var timer; // 在重新计算位置的节流函数中使用
   /** 日期选择器HTML模板（未压缩版）
     <div class="m-datepicker">
       <div class="g-hd">
@@ -383,6 +383,13 @@ var Datepicker = (function(doc) {
     bindEvent(toggleElem);
   }
 
+  /**
+   * [calcPosition 计算日期选择器应该出现的位置]
+   * @Author   zzj
+   * @DateTime 2018-03-27
+   * @version  [0.1]
+   * @return   {[type]}   [description]
+   */
   function calcPosition(){
     var viewportWidth = doc.documentElement.clientWidth,
       viewportHeight = doc.documentElement.clientHeight,
@@ -413,6 +420,12 @@ var Datepicker = (function(doc) {
       left: pLeft,
       top: pTop
     };
+  }
+
+
+  function reCalPosition(){
+    if(timer) clearTimeout(timer);
+    timer = setTimeout(setPosition, 200);
   }
 
   /**
@@ -488,6 +501,7 @@ var Datepicker = (function(doc) {
     btnNextElem.addEventListener('click', next, false);
     tbodyElem.addEventListener('click', selectDate, false);     // 利用事件委托，提高效率
     doc.addEventListener('click', bodyClickHandler, false);
+    win.addEventListener('resize', reCalPosition, false);
   }
 
   initDom();    // 加载脚本时，同时初始化
@@ -495,4 +509,4 @@ var Datepicker = (function(doc) {
 
   return Datepicker;
 
-})(document);
+})(document, window, undefined);

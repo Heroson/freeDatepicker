@@ -6,32 +6,16 @@
 .m-datepicker.z-show{
   display: block;
 }
-
 .m-datepicker h1{
    margin-top: 0;margin-bottom: 0;
    font-size: 14px;font-weight: normal;
 }
-
-/*.m-datepicker .g-hd{
-  overflow: hidden;
-}
-.m-datepicker .g-hd .g-l{
-  float:left;
-}
-.m-datepicker .g-hd .g-r{
-  float:right;
-}
-.m-datepicker .g-hd .g-m{
-  overflow:hidden;
-}*/
-
 .m-datepicker .g-hd{
   display: table;width: 100%;
 }
 .m-datepicker .g-hd>*{
   display: table-cell;vertical-align: middle;
 }
-
 .m-datepicker .g-bd table{
   table-layout: fixed;
   width:260px;
